@@ -37,94 +37,6 @@
                     </tr>
                   </thead>
                   <tbody>
-
-
-                  <tr class="tops">
-                    <td rowspan="2" class="td-num">
-                        <span class="ribbon" style="background-color: #1c875b">
-                          ${item.brand_tag}
-                      </span>
-                        <span>${index + 1}</span>
-                    </td>
-                    <td class="td-left td-casino td-casino-review">
-                      <p>
-                        <a rel="nofollow" href="#" target="_blank"
-                        ><img
-                                src="http://localhost:8000/storage/${item.brand_image || ""}"
-                          alt="${item.brand_name || " "}"
-                          loading="eager"
-                          fetchpriority="high"
-                          decoding="async"
-                          width="75"
-                          height="75"
-                          format="auto" /></a
-                        ><a href="#"
-                      ><span class="hptop10name">${
-                              item.brand_name || ""
-                            }</span></a
-                      >
-                      </p>
-                      <div class="star-rating-mobile">
-                        <div class="stars">
-                          <div style="width:"100%">`;
-
-                        </div>
-                      </div>
-                      <div class="tnc tnc_others"></div>
-
-                  </td>
-              <td>
-                <img alt="verified image" src="assets/img/verified.png" loading="lazy"/>
-              </td>
-              <td class="td-bonus">
-              <div class="exclusive-container">
-                <span class="exclusive-tag">Exclusif</span>
-              </div>
-                <span class="bonus-title-desktop">
-                           Bonus 200% jusqu'à 500€ + 500 Tours Gratuits
-                        </span>
-                <span class="bonus-title-mobile">
-                            Bonus 200% jusqu'à 500€ + 500 Tours Gratuits
-                        </span>
-              </td>
-              <td class="star-rating-desktop">
-                <div>
-                  <div class="stars"> <div style="width:100%">`;
-                  </div>
-                  </div>
-                </div>
-              </td>
-
-              <td class="tnc tnc_others"></td>
-              <td class="td-play">
-                <a rel="nofollow" href="#" class="btn1" target="_blank">
-                  Obtenir le bonus
-                </a>
-                <a
-                        rel="nofollow"
-                        href="#"
-                        class="visit-link-2"
-                        target="_blank"> Visiter le site
-                </a>
-                <i class="age_limit age_others withterms withlink"></i>
-                <div class="terms_for_mobile hidden row0" data-id="0">
-
-                </div>
-              </td>
-              </tr>
-              <tr class="terms_for_desktop tops">
-                <td class="ex hidden row0" colspan="7">
-
-                </td>
-              </tr>
-
-
-
-
-
-
-
-
                   
                   </tbody>
                 </table>
@@ -138,3 +50,107 @@
 </html>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+  $(document).ready(function () {
+    $.get("http://localhost:8000/api/brands", function (data) {
+      $.each(data, function (index, item) {
+        var row = `
+                <tr class="tops">
+                      <td rowspan="2" class="td-num">
+                       ${item.brand_tag ? `<span class="ribbon" style="background-color: #1c875b">
+                    ${item.brand_tag}
+                </span>` : ''}
+                        <span>${index + 1}</span>
+                      </td>
+                      <td class="td-left td-casino td-casino-review">
+                        <p>
+                          <a rel="nofollow" href="#" target="_blank"
+                            ><img
+                              src="http://localhost:8000/storage/${item.brand_image || ""}"
+                              alt="${item.brand_name || " "}"
+                              loading="eager"
+                              fetchpriority="high"
+                              decoding="async"
+                              width="75"
+                              height="75"
+                              format="auto" /></a
+                          ><a href="#"
+                            ><span class="hptop10name">${
+                              item.brand_name || ""
+                            }</span></a
+                          >
+                        </p>
+                        <div class="star-rating-mobile">
+                          <div class="stars">
+                            <div style="width:"100%">`;
+
+        row += generateStars(item.rating);row += `
+
+                              </div>
+                          </div>
+                          <div class="tnc tnc_others"></div>
+                        </div>
+                      </td>
+                      <td>
+                            <img alt="verified image" src="assets/img/verified.png" loading="lazy"/>
+                      </td>
+                      <td class="td-bonus">
+                       ${item.is_exclusive ? `<div class="exclusive-container">
+                          <span class="exclusive-tag">Exclusif</span>
+                        </div>` : ''}
+                        <span class="bonus-title-desktop">
+                           Bonus 200% jusqu'à 500€ + 500 Tours Gratuits
+                        </span>
+                        <span class="bonus-title-mobile">
+                            Bonus 200% jusqu'à 500€ + 500 Tours Gratuits
+                        </span>
+                      </td>
+                      <td class="star-rating-desktop">
+                        <div>
+                          <div class="stars"> <div style="width:100%">`;
+        row += generateStars(item.rating);
+        row += `
+                           </div>
+                          </div>
+                        </div>
+                      </td>
+
+                      <td class="tnc tnc_others"></td>
+                      <td class="td-play">
+                        <a rel="nofollow" href="#" class="btn1" target="_blank">
+                                Obtenir le bonus
+                         </a>
+                        <a
+                          rel="nofollow"
+                          href="#"
+                          class="visit-link-2"
+                          target="_blank"> Visiter le site
+                          </a>
+                        <i class="age_limit age_others withterms withlink"></i>
+                        <div class="terms_for_mobile hidden row0" data-id="0">
+                                ${item.description}
+                        </div>
+                      </td>
+                    </tr>
+                    <tr class="terms_for_desktop tops">
+                      <td class="ex hidden row0" colspan="7">
+                        ${item.description}
+                      </td>
+                    </tr>`;
+
+        $("#brandTable tbody").append(row);
+      });
+    });
+  });
+
+  function generateStars(ratingValue) {
+    if (ratingValue < 0 || ratingValue > 5) return;
+    let starSpan = "";
+    for (let i = 1; i <= 5; i++) {
+      let starClass = i <= ratingValue ? "fa fa-star checked" : "fa fa-star";
+      starSpan += "<span class='" + starClass + "'></span>";
+    }
+    return starSpan;
+  }
+</script>
