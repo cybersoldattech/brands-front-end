@@ -15,7 +15,7 @@ Before starting the project, please start the brand back-end project: https://gi
 ## Run application
 
 ```bash
-docker-compose up --build
+docker compose up --build
 ```
 
 ```bash
