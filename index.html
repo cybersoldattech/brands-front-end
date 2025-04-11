@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="fr-FR">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <title>
+      Meilleur Casino en Ligne France | Guide Fiable | Bonus + 5 000 €
+    </title>
+    <link rel="stylesheet" href="./assets/css/style.css" />
+  </head>
+  <body id="bodylan_fr" class=" bcel">
+    <div style="overflow-x: hidden">
+      <div class="boxed">
+        <div class="preloading"></div>
+        <div class="content1 content-box group" id="homepage">
+          <div class="col col-main">
+            <div style="position: relative" class="tops-container">
+              <h1 class="tab-title btmg0 tab-title-hp">
+                Meilleur Casino en ligne Français : Comparatif du top casino -
+                Juin 2024
+              </h1>
+              <div id="tops__inner_666ca1cb91994">
+                <table  id="brandTable"  class="mainTable tops preset main-table top10-table xterms"   >
+                  <thead>
+                    <tr>
+                      <th class="th-num">#</th>
+                      <th>Casino</th>
+                      <th></th>
+                      <th>Bonus</th>
+                      <th><span>Note</span></th>
+                      <th><span class="terms">Termes</span></th>
+                      <th>Obtenir le bonus</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+  $(document).ready(function () {
+    $.get("http://localhost:8000/api/brands", function (data) {
+      $.each(data, function (index, item) {
+        var row = `
+                <tr class="tops">
+                      <td rowspan="2" class="td-num">
+                       ${item.brand_tag ? `<span class="ribbon" style="background-color: #1c875b">
+                    ${item.brand_tag}
+                </span>` : ''}
+                        <span>${index + 1}</span>
+                      </td>
+                      <td class="td-left td-casino td-casino-review">
+                        <p>
+                          <a rel="nofollow" href="#" target="_blank"
+                            ><img
+                              src="http://localhost:8000/storage/${item.brand_image || ""}"
+                              alt="${item.brand_name || " "}"
+                              loading="eager"
+                              fetchpriority="high"
+                              decoding="async"
+                              width="75"
+                              height="75"
+                              format="auto" /></a
+                          ><a href="#"
+                            ><span class="hptop10name">${
+                              item.brand_name || ""
+                            }</span></a
+                          >
+                        </p>
+                        <div class="star-rating-mobile">
+                          <div class="stars">
+                            <div style="width:"100%">`;
+
+        row += generateStars(item.rating);row += `
+                        
+                              </div>
+                          </div>
+                          <div class="tnc tnc_others"></div>
+                        </div>
+                      </td>
+                      <td>
+                            <img alt="verified image" src="assets/img/verified.png" loading="lazy"/>
+                      </td>
+                      <td class="td-bonus">
+                       ${item.is_exclusive ? `<div class="exclusive-container">
+                          <span class="exclusive-tag">Exclusif</span>
+                        </div>` : ''}
+                        <span class="bonus-title-desktop">
+                           Bonus 200% jusqu'à 500€ + 500 Tours Gratuits
+                        </span>
+                        <span class="bonus-title-mobile">
+                            Bonus 200% jusqu'à 500€ + 500 Tours Gratuits
+                        </span>
+                      </td>
+                      <td class="star-rating-desktop">
+                        <div>
+                          <div class="stars"> <div style="width:100%">`;
+        row += generateStars(item.rating);
+        row += `
+                           </div>
+                          </div>
+                        </div>
+                      </td>
+
+                      <td class="tnc tnc_others"></td>
+                      <td class="td-play">
+                        <a rel="nofollow" href="#" class="btn1" target="_blank">
+                                Obtenir le bonus
+                         </a>
+                        <a
+                          rel="nofollow"
+                          href="#"
+                          class="visit-link-2"
+                          target="_blank"> Visiter le site
+                          </a>
+                        <i class="age_limit age_others withterms withlink"></i>
+                        <div class="terms_for_mobile hidden row0" data-id="0">
+                                ${item.description}
+                        </div>
+                      </td>
+                    </tr>
+                    <tr class="terms_for_desktop tops">
+                      <td class="ex hidden row0" colspan="7">
+                        ${item.description}
+                      </td>
+                    </tr>`;
+
+        $("#brandTable tbody").append(row);
+      });
+    });
+  });
+
+  function generateStars(ratingValue) {
+    if (ratingValue < 0 || ratingValue > 5) return;
+    let starSpan = "";
+    for (let i = 1; i <= 5; i++) {
+      let starClass = i <= ratingValue ? "fa fa-star checked" : "fa fa-star";
+      starSpan += "<span class='" + starClass + "'></span>";
+    }
+    return starSpan;
+  }
+</script>
