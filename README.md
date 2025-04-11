@@ -27,5 +27,5 @@ http://localhost:8080
 ## Stop application
 
 ```bash
-docker-compose down
+docker compose down
 ```
